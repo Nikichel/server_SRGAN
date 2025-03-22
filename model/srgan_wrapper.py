@@ -18,7 +18,7 @@ class SRGANWrapper:
         self.model = Generator(in_channels=3).to(self.device)
         self.transform = Transforms()
         self.ready = False
-        self.model_path = "models/gen_and_disc_V5.pth"
+        self.model_path = "/app/models/gen_and_disc_V5.pth"
         self.model_url = "https://drive.google.com/file/d/1EgdyWXjGPq-nuM1q3KBURCa0pPlQSpvx/view?usp=sharing"
         self.logger.info(f"Initialized SRGAN wrapper on device: {self.device}")
     
