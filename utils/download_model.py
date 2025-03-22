@@ -10,6 +10,8 @@ async def download_model(model_path: str, model_url: str) -> bool:
     if not os.path.exists(model_dir):
         os.makedirs(model_dir, exist_ok=True)
         logger.info(f"Создана папка: {model_dir}")
+    else:
+        return True
     
     try:
         # Извлекаем идентификатор файла из URL
