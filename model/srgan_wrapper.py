@@ -29,7 +29,7 @@ class SRGANWrapper:
             if not download_model(self.model_path, self.model_url):
                 self.logger.error("Не удалось скачать модель")
                 return False
-            
+            print("load start")
             # Загружаем модель
             checkpoint = torch.load(self.model_path, map_location=self.device, weights_only=False)
             print("load complited")
