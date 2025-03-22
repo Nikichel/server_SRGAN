@@ -19,7 +19,7 @@ class SRGANWrapper:
         self.transform = Transforms()
         self.ready = False
         self.model_path = "models/gen_and_disc_V5.pth"
-        self.model_url = "https://drive.google.com/file/d/1oyjSRro9ESVv60rSmIILaAhR_JTNdFIf/view?usp=sharing"
+        self.model_url = "https://drive.google.com/file/d/1EgdyWXjGPq-nuM1q3KBURCa0pPlQSpvx/view?usp=sharing"
         self.logger.info(f"Initialized SRGAN wrapper on device: {self.device}")
     
     async def load_model(self) -> bool:
@@ -32,6 +32,7 @@ class SRGANWrapper:
             
             # Загружаем модель
             checkpoint = torch.load(self.model_path, map_location=self.device, weights_only=False)
+            print("load complited")
             self.model.load_state_dict(checkpoint["generator_state_dict"])
             
             self.model.eval()
@@ -45,6 +46,8 @@ class SRGANWrapper:
     
     async def upscale_image(self, image_data: bytes, scale_factor: int = 4) -> Optional[str]:
         """Увеличение разрешения изображения с помощью SRGAN"""
+        print(self.ready)
+        print(self.model)
         if not self.ready or self.model is None:
             self.logger.error("Model not loaded")
             raise RuntimeError("Модель SRGAN не загружена")
