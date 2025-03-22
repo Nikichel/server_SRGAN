@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  srgan-server:
+    build: .
+    container_name: srgan-server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./logs:/app/logs
+      - ./model:/app/model
+    environment:
+      - PYTHONUNBUFFERED=1
+      - NGROK_AUTH_TOKEN=2uXkB0iFko6NIos8uxbpiPwrCkv_9ZPQ9Ybozu3sps5rj1Dk
+      - MODEL_PATH=/app/model/gen_and_disc_V5.pth
+      - MODEL_URL=https://drive.google.com/file/d/1oyjSRro9ESVv60rSmIILaAhR_JTNdFIf/view?usp=sharing
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3 
