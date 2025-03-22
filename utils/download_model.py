@@ -6,6 +6,11 @@ async def download_model(model_path: str, model_url: str) -> bool:
     """Скачивание модели с Google Drive"""
     logger = ServerLogger()
     
+    model_dir = os.path.dirname(model_path)
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir, exist_ok=True)
+        logger.info(f"Создана папка: {model_dir}")
+
     # Проверяем, существует ли файл
     if os.path.exists(model_path):
         logger.info(f"Модель уже существует по пути: {model_path}")
