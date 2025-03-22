@@ -1,5 +1,5 @@
 import asyncio
-from app.app import FastAPIApp
+from app import FastAPIApp
 import ngrok
 import nest_asyncio
 from utils.server_logger import ServerLogger

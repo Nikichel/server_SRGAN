@@ -1,36 +1,34 @@
-# Используем официальный образ Python
-FROM python:3.10-slim
+FROM python:3.9-slim
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Устанавливаем системные зависимости
+# Установка системных зависимостей
 RUN apt-get update && apt-get install -y \
     build-essential \
-    curl \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Копируем файлы зависимостей
+# Копирование файлов зависимостей
 COPY requirements.txt .
 
-# Устанавливаем зависимости Python
+# Установка зависимостей Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем код приложения
-COPY app/ ./app/
+# Копирование кода приложения
+COPY main.py .
+COPY app.py .
+COPY __init__.py .
+COPY utils/ ./utils/
+COPY transform/ ./transform/
+COPY model/ ./model/
 
-# Создаем директории для логов и моделей
-RUN mkdir -p logs/server logs/client models
+# Создание директории для логов
+RUN mkdir -p logs/server
 
-# Создаем пользователя без прав root
+# Создание непривилегированного пользователя
 RUN useradd -m appuser && chown -R appuser:appuser /app
 USER appuser
 
-# Устанавливаем переменную окружения для пути к модели
-ENV MODEL_PATH=/app/models/gen_and_disc_V5.pth
-
-# Открываем порт
-EXPOSE 8000
-
-# Запускаем приложение
-CMD ["python", "-m", "app.main"] 
+# Команда запуска приложения
+CMD ["python", "main.py"]

@@ -1,6 +1,6 @@
 import os
 import gdown
-from ..utils.server_logger import ServerLogger
+from utils.server_logger import ServerLogger
 
 def download_model(model_path: str, model_url: str) -> bool:
     """

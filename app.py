@@ -6,7 +6,7 @@ import os
 from typing import Optional
 import asyncio
 import gc
-from .model.srgan_wrapper import SRGANWrapper
+from model.srgan_wrapper import SRGANWrapper
 
 class FastAPIApp:
     def __init__(self):

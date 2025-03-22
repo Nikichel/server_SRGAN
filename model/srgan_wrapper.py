@@ -1,13 +1,13 @@
 import numpy as np
 import torch
 from .generator import Generator
-from ..transform.transform import Transforms
+from transform.transform import Transforms
 import io
 from PIL import Image
 import base64
 from typing import Optional
-from ..utils.server_logger import ServerLogger
-from ..utils.download_model import download_model
+from utils.server_logger import ServerLogger
+from utils.download_model import download_model
 import os
 
 class SRGANWrapper:
