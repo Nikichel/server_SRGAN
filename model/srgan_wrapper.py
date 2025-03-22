@@ -31,7 +31,7 @@ class SRGANWrapper:
                 return False
             
             # Загружаем модель
-            checkpoint = torch.load(self.model_path, map_location=self.device)
+            checkpoint = torch.load(self.model_path, map_location=self.device, weights_only=False)
             self.model.load_state_dict(checkpoint["generator_state_dict"])
             
             self.model.eval()
