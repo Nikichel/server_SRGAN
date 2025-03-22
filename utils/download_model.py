@@ -1,10 +1,12 @@
 import os
-import gdown
+import aiohttp
+import asyncio
+import aiofiles
 from utils.server_logger import ServerLogger
 
 async def download_model(model_path: str, model_url: str) -> bool:
     """
-    Скачивает модель из Google Drive, если она еще не существует
+    Асинхронно скачивает модель из Google Drive, если она еще не существует
     
     Args:
         model_path (str): Путь, куда сохранить модель
@@ -24,10 +26,22 @@ async def download_model(model_path: str, model_url: str) -> bool:
         logger.info(f"Начинаем скачивание модели из {model_url}")
         
         # Создаем директорию, если она не существует
-        await os.makedirs(os.path.dirname(model_path), exist_ok=True)
+        os.makedirs(os.path.dirname(model_path), exist_ok=True)
         
-        # Скачиваем модель
-        await gdown.download(model_url, model_path, quiet=False)
+        # Асинхронно скачиваем модель
+        async with aiohttp.ClientSession() as session:
+            async with session.get(model_url) as response:
+                if response.status == 200:
+                    # Асинхронная запись файла
+                    async with aiofiles.open(model_path, 'wb') as f:
+                        while True:
+                            chunk = await response.content.read(1024 * 1024)  # Читаем по 1MB
+                            if not chunk:
+                                break
+                            await f.write(chunk)
+                else:
+                    logger.error(f"Ошибка при скачивании: статус {response.status}")
+                    return False
         
         if os.path.exists(model_path):
             logger.info(f"Модель успешно скачана в {model_path}")
