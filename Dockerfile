@@ -18,7 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Копирование кода приложения
 COPY main.py .
 COPY app.py .
-COPY __init__.py .
 COPY utils/ ./utils/
 COPY transform/ ./transform/
 COPY model/ ./model/
