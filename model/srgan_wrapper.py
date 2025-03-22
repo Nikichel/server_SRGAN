@@ -19,7 +19,7 @@ class SRGANWrapper:
         self.transform = Transforms()
         self.ready = False
         self.model_path = os.getenv("MODEL_PATH", "models/gen_and_disc_V5.pth")
-        self.model_url = os.getenv("MODEL_URL", "https://drive.google.com/uc?id=YOUR_FILE_ID")
+        self.model_url = "https://drive.google.com/file/d/1oyjSRro9ESVv60rSmIILaAhR_JTNdFIf/view?usp=sharing"
         self.logger.info(f"Initialized SRGAN wrapper on device: {self.device}")
     
     async def load_model(self) -> bool:
