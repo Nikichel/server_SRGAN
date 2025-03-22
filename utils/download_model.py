@@ -2,7 +2,7 @@ import os
 import gdown
 from utils.server_logger import ServerLogger
 
-def download_model(model_path: str, model_url: str) -> bool:
+async def download_model(model_path: str, model_url: str) -> bool:
     """
     Скачивает модель из Google Drive, если она еще не существует
     
@@ -24,10 +24,10 @@ def download_model(model_path: str, model_url: str) -> bool:
         logger.info(f"Начинаем скачивание модели из {model_url}")
         
         # Создаем директорию, если она не существует
-        os.makedirs(os.path.dirname(model_path), exist_ok=True)
+        await os.makedirs(os.path.dirname(model_path), exist_ok=True)
         
         # Скачиваем модель
-        gdown.download(model_url, model_path, quiet=False)
+        await gdown.download(model_url, model_path, quiet=False)
         
         if os.path.exists(model_path):
             logger.info(f"Модель успешно скачана в {model_path}")

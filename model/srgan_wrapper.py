@@ -26,7 +26,7 @@ class SRGANWrapper:
         """Загрузка модели SRGAN"""
         try:
             # Скачиваем модель, если она еще не существует
-            if not download_model(self.model_path, self.model_url):
+            if not await download_model(self.model_path, self.model_url):
                 self.logger.error("Не удалось скачать модель")
                 return False
             print("load start")
